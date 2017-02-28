@@ -28,15 +28,15 @@ This generator creates a docker-compose file (`docker-compose.yml`) and scripts 
 
 ## Longer walkthrough videos
 
-[![01. Basic walkthrough][video1thumb][video1]]
+[![01. Basic walkthrough][video1thumb]][video1]
 
-[![02. Using adminer][video2thumb][video2]]
+[![02. Using adminer][video2thumb]][video2]
 
-[![03. The queue daemon][video3thumb][video3]]
+[![03. The queue daemon][video3thumb]][video3]
 
-[![04. The notifications daemon][video4thumb][video4]]
+[![04. The notifications daemon][video4thumb]][video4]
 
-[![05. Managing containers][video5thumb][video5]]
+[![05. Managing containers][video5thumb]][video5]
 
 
 ## Getting Started
