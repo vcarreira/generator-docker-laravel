@@ -51,7 +51,8 @@
   "repository": "vcarreira/generator-docker-laravel",
   "scripts": {
     "prepublish": "gulp prepublish",
-    "test": "gulp"
+    "test": "gulp",
+    "coveralls": "gulp coveralls"
   },
   "license": "Apache-2.0"
 }
