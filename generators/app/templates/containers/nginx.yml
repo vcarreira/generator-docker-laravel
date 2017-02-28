@@ -1,0 +1,13 @@
+  nginx:
+    container_name: ${APP_NAME}-httpd
+    image: vcarreira/nginx-php7-fpm
+    ports:
+      - <%= docker.nginx.port %>:80
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/sites:/etc/nginx/sites-enabled
+    links:<% docker.links.forEach(function(link) { %>
+      - <%= link %><% }); %>
+    mem_limit: <%= docker.nginx.memlimit %>
+    networks:
+      - <%= docker.name %>-network

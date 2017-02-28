@@ -1,0 +1,38 @@
+version: '2'
+# ************ README ****************
+# Reads env vars from .env
+# Requires docker-compose version 1.7+
+# ************************************
+
+services:
+<%- include('containers/nginx.yml', {docker}); %>
+
+<% if(docker.mysql) { %>
+<%- include('containers/mysql.yml', {docker}); %>
+<% } %>
+
+<% if(docker.redis) { %>
+<%- include('containers/redis.yml', {docker}); %>
+<% } %>
+
+<% if(docker.queue) { %>
+<%- include('containers/queue.yml', {docker}); %>
+<% } %>
+
+<% if(docker.notifications) { %>
+<%- include('containers/notifications.yml', {docker}); %>
+<% } %>
+
+<% if(docker.adminer) { %>
+<%- include('containers/adminer.yml', {docker}); %>
+<% } %>
+
+# one-off containers
+# call docker-compose rm -a -f after docker-compose up to remove all one-off containers
+<%- include('containers/artisan.yml', {docker}); %>
+<%- include('containers/phpunit.yml', {docker}); %>
+<%- include('containers/phpspec.yml', {docker}); %>
+
+networks:
+  <%= docker.name %>-network:
+    driver: bridge

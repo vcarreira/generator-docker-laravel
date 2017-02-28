@@ -1,0 +1,13 @@
+  notifications-daemon:
+    container_name: ${APP_NAME}-notifications-daemon
+    image: vcarreira/${APP_NAME}-notifications
+    build:
+      context: ./
+      dockerfile: ./docker/notifications/notifications.dockerfile
+    ports:
+      - <%= docker.notifications.port %>:3000
+    links:<% docker.links.forEach(function(link) { %>
+      - <%= link %><% }); %>
+    mem_limit: <%= docker.notifications.memlimit %>
+    networks:
+      - <%= docker.name %>-network

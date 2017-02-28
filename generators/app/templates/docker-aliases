@@ -1,0 +1,16 @@
+alias dc-up="docker-compose up -d <%= docker.daemons %>"
+alias dc-down="docker-compose down"
+
+<% if(docker.adminer) { %>
+alias dc-adminer="docker-compose up -d adminer"
+<% } %>
+
+#one-off containers
+alias dc-art="docker-compose run --rm artisan"
+alias dc-artisan="docker-compose run --rm artisan"
+alias dc-phpunit="docker-compose run --rm phpunit"
+alias dc-phpspec="docker-compose run --rm phpspec"
+
+# clean-up alias
+alias dc-clear-generated="docker images -f 'label=com.github.vcarreira.yo-generated' | awk '(NR>1) {print \$1\":\"\$2}' | xargs -L1 docker rmi"
+

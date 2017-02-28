@@ -1,0 +1,18 @@
+  mysql:
+    container_name: ${APP_NAME}-db
+    image: vcarreira/${APP_NAME}-db
+    build:
+      context: ./docker/mysql
+      dockerfile: mysql.dockerfile
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./docker/mysql/db:/var/lib/mysql
+    mem_limit: <%= docker.mysql.memlimit %>
+    networks:
+      - <%= docker.name %>-network

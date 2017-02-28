@@ -1,0 +1,14 @@
+{
+  "name": "notification-pusher",
+  "version": "1.0.0",
+  "description": "Subscribes a Redis channel and broadcasts all messages through socket.io",
+  "private": true,
+  "author": "Vitor Carreira",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "express": "^4.13.4",
+    "ioredis": "^1.15.1",
+    "socket.io": "^1.4.6"
+  }
+}

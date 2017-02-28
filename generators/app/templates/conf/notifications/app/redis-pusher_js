@@ -1,0 +1,27 @@
+require('dotenv').config();
+const util = require('util');
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const Redis = require('ioredis');
+const redisOptions = {
+    password: process.env.REDIS_PASSWORD
+};
+
+let redis = new Redis(process.env.REDIS_PORT, process.env.REDIS_HOST, redisOptions);
+
+// Example on channel subscription
+redis.subscribe('channel1', 'channel2', function (err, count) {
+    console.log(util.format('%d channels subscribed', count));
+});
+
+redis.on('message', function (channel, message) {
+    console.log('Channel:' + channel);
+    console.log('Message Received: ' + message);
+    message = JSON.parse(message);
+    io.emit(channel, message.data);
+});
+
+http.listen(3000, function () {
+    console.log('Listening on Port 3000');
+});

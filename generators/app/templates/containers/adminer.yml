@@ -1,0 +1,16 @@
+  adminer:
+    container_name: ${APP_NAME}-adminer
+    image: vcarreira/${APP_NAME}-adminer
+    build:
+      context: ./docker/adminer
+      dockerfile: adminer.dockerfile
+    ports:
+      - <%= docker.adminer.port %>:80
+    volumes:
+      - ./docker/adminer/sites:/etc/nginx/sites-enabled
+      - ./docker/adminer/www:/var/www
+    links:<% docker.links.forEach(function(link) { %>
+      - <%= link %><% }); %>
+    mem_limit: <%= docker.adminer.memlimit %>
+    networks:
+      - <%= docker.name %>-network

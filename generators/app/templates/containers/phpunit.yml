@@ -1,0 +1,8 @@
+  phpunit:
+    image: vcarreira/phpunit
+    volumes:
+      - ./:/var/www
+    links:<% docker.links.forEach(function(link) { %>
+      - <%= link %><% }); %>
+    networks:
+      - <%= docker.name %>-network

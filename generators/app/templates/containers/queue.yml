@@ -1,0 +1,13 @@
+  queue-daemon:
+    container_name: ${APP_NAME}-queue-daemon
+    image: vcarreira/${APP_NAME}-queue
+    build:
+      context: ./docker/queue
+      dockerfile: queue.dockerfile
+    volumes:
+      - ./:/var/www
+    links:<% docker.links.forEach(function(link) { %>
+      - <%= link %><% }); %>
+    mem_limit: <%= docker.queue.memlimit %>
+    networks:
+      - <%= docker.name %>-network

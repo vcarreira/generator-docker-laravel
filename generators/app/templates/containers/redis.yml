@@ -1,0 +1,14 @@
+  redis:
+    container_name: ${APP_NAME}-redis
+    image: vcarreira/redis
+    expose:
+      - 6379
+    environment:
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: redis-server --appendonly yes
+    volumes:
+      - ./docker/redis:/data
+    mem_limit: <%= docker.redis.memlimit %>
+    networks:
+      - <%= docker.name %>-network
