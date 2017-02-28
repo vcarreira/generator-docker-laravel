@@ -174,7 +174,7 @@ module.exports = class extends Generator {
       memlimit: MYSQL_MEM_LIMIT
     };
 
-    this.docker.links.push('mysql:${DB_HOST}');
+    this.docker.links.push(`mysql:$\{DB_HOST}`);
 
     this.fs.copy(
       this.templatePath(`conf/databases/${cnf}`),
@@ -193,7 +193,7 @@ module.exports = class extends Generator {
     this.docker.redis = {
       memlimit: REDIS_MEM_LIMIT
     };
-    this.docker.links.push('redis:${REDIS_HOST}');
+    this.docker.links.push(`redis:$\{REDIS_HOST}`);
   }
 
   queueDaemon() {
