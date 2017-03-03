@@ -1,4 +1,4 @@
-# generator-docker-laravel [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+# generator-docker-laravel [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status](https://coveralls.io/repos/github/vcarreira/generator-docker-laravel/badge.svg?branch=master)](https://coveralls.io/github/vcarreira/generator-docker-laravel?branch=master)
 > Docker compose generator for a full Laravel setup
 
 ## Installation
