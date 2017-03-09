@@ -136,7 +136,6 @@ module.exports = class extends Generator {
 
   nginx() {
     mkdirp.sync('docker/nginx/sites');
-    mkdirp.sync('docker/nginx/logs');
 
     this.docker.name = this.settings.name;
     this.docker.links = [];
@@ -184,6 +183,7 @@ module.exports = class extends Generator {
       this.templatePath('conf/databases/mysql.dockerfile'),
       this.destinationPath('docker/mysql/mysql.dockerfile')
     );
+    this.fs.write('docker/mysql/.gitignore', 'db');
   }
 
   redis() {
@@ -194,6 +194,7 @@ module.exports = class extends Generator {
       memlimit: REDIS_MEM_LIMIT
     };
     this.docker.links.push(`redis:$\{REDIS_HOST}`);
+    this.fs.write('docker/redis/.gitignore', '*.aof');
   }
 
   queueDaemon() {

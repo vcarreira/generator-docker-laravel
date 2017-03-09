@@ -92,6 +92,18 @@ describe('generator-docker-laravel:app', function () {
       /DB_PASSWORD=[^x]\S+/
     );
   });
+  it('writes .gitignore files', function () {
+    assert.fileContent(
+      'docker/mysql/.gitignore',
+      'db'
+    );
+  });
+  it('uses minimal cnf', function () {
+    assert.fileContent(
+      'docker/mysql/conf/my.cnf',
+      /performance_schema=off/
+    );
+  });
 
   describe('with a queue daemon', function () {
     before(function () {
@@ -136,6 +148,12 @@ describe('generator-docker-laravel:app', function () {
       assert.fileContent(
         '.env',
         /QUEUE_DRIVER=redis/
+      );
+    });
+    it('writes .gitignore files', function () {
+      assert.fileContent(
+        'docker/redis/.gitignore',
+        '*.aof'
       );
     });
   });
@@ -198,6 +216,12 @@ describe('generator-docker-laravel:app', function () {
       assert.fileContent(
         '.env',
         /BROADCAST_DRIVER=redis/
+      );
+    });
+    it('writes .gitignore files', function () {
+      assert.fileContent(
+        'docker/redis/.gitignore',
+        '*.aof'
       );
     });
   });
@@ -335,6 +359,82 @@ describe('generator-docker-laravel:app', function () {
         'custom-path/redis-pusher.js',
         'custom-path/package.json'
       ]);
+    });
+  });
+
+  describe('with small mysql', function () {
+    before(function () {
+      return helpers.run(path.join(__dirname, '../generators/app'))
+        .inTmpDir(function (dir) {
+          fs.copySync(path.join(__dirname, 'laravel-env1'), path.join(dir, '.env'));
+        })
+        .withPrompts({
+          name: 'foobar',
+          database: 'smallMySQL'
+        })
+        .toPromise();
+    });
+    it('creates base docker files', function () {
+      assert.file([
+        'docker-compose.yml',
+        'dc-aliases'
+      ]);
+    });
+    it('creates mysql entry in docker-compose', function () {
+      assert.fileContent(
+        'docker-compose.yml',
+        /\s+mysql:/
+      );
+      assert.noFileContent(
+        'docker-compose.yml',
+        /\s+redis:/
+      );
+      assert.noFileContent(
+        'docker-compose.yml',
+        /\s+notifications-daemon:/
+      );
+      assert.noFileContent(
+        'docker-compose.yml',
+        /\s+queue-daemon:/
+      );
+      assert.noFileContent(
+        'docker-compose.yml',
+        /\s+adminer:/
+      );
+    });
+    it('updates .env file', function () {
+      assert.fileContent(
+        '.env',
+        /MYSQL_ROOT_PASSWORD=\S+/
+      );
+      assert.fileContent(
+        '.env',
+        /DB_CONNECTION=mysql/
+      );
+      assert.fileContent(
+        '.env',
+        /DB_HOST=foobar-db/
+      );
+      assert.fileContent(
+        '.env',
+        /DB_DATABASE=foobar/
+      );
+      assert.fileContent(
+        '.env',
+        /DB_PASSWORD=[^x]\S+/
+      );
+    });
+    it('writes .gitignore files', function () {
+      assert.fileContent(
+        'docker/mysql/.gitignore',
+        'db'
+      );
+    });
+    it('uses minimal cnf', function () {
+      assert.fileContent(
+        'docker/mysql/conf/my.cnf',
+        /\[mysqlhotcopy\]/
+      );
     });
   });
 });
