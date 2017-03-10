@@ -51,7 +51,8 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'nginxPort',
         message: 'Local port for the nginx container?',
-        default: 8888
+        default: 8888,
+        store: true
       },
       {
         type: 'list',
@@ -99,7 +100,8 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'notificationsPort',
         message: 'Notifications\'s port',
-        default: 8080
+        default: 8080,
+        store: true
       },
       {
         when: function (response) {
@@ -108,7 +110,8 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'notificationsAppPath',
         message: 'Notifications\'s nodejs app path',
-        default: 'nodejs-apps/notifications'
+        default: 'nodejs-apps/notifications',
+        store: true
       },
       {
         when: function (response) {
@@ -117,7 +120,8 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'adminerPort',
         message: 'Adminer\'s port',
-        default: 9999
+        default: 9999,
+        store: true
       }
     ];
 
@@ -250,6 +254,10 @@ module.exports = class extends Generator {
       this.templatePath('update-notifications-service.sh'),
       this.destinationPath('update-notifications-service.sh')
     );
+    this.fs.copy(
+      this.templatePath('update-notifications-service.bat'),
+      this.destinationPath('update-notifications-service.bat')
+    );
   }
 
   adminer() {
@@ -296,6 +304,11 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('docker-aliases'),
       this.destinationPath('dc-aliases'),
+      {docker: this.docker}
+    );
+    this.fs.copyTpl(
+      this.templatePath('docker-aliases-win'),
+      this.destinationPath('dc-aliases.bat'),
       {docker: this.docker}
     );
   }

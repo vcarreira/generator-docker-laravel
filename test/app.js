@@ -19,7 +19,8 @@ describe('generator-docker-laravel:app', function () {
   it('creates base docker files', function () {
     assert.file([
       'docker-compose.yml',
-      'dc-aliases'
+      'dc-aliases',
+      'dc-aliases.bat'
     ]);
   });
   it('creates base services in docker-compose', function () {
@@ -196,7 +197,10 @@ describe('generator-docker-laravel:app', function () {
       ]);
     });
     it('creates a script to update and reload the service', function () {
-      assert.file('update-notifications-service.sh');
+      assert.file([
+        'update-notifications-service.sh',
+        'update-notifications-service.bat',
+      ]);
     });
     it('uses default notifications port', function () {
       assert.fileContent(
@@ -377,7 +381,8 @@ describe('generator-docker-laravel:app', function () {
     it('creates base docker files', function () {
       assert.file([
         'docker-compose.yml',
-        'dc-aliases'
+        'dc-aliases',
+        'dc-aliases.bat'
       ]);
     });
     it('creates mysql entry in docker-compose', function () {

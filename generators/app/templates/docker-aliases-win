@@ -1,0 +1,16 @@
+@echo off
+doskey dc-up=docker-compose up -d <%= docker.daemons %>
+doskey dc-down=docker-compose down
+
+<% if(docker.adminer) { %>
+doskey dc-adminer=docker-compose up -d adminer
+<% } %>
+
+REM one-off containers
+doskey dc-art=docker-compose run --rm artisan $*
+doskey dc-artisan=docker-compose run --rm artisan $*
+doskey dc-phpunit=docker-compose run --rm phpunit $*
+doskey dc-phpspec=docker-compose run --rm phpspec $*
+
+REM clean-up alias
+doskey dc-clear-generated=FOR /F "tokens=1 skip=1" %%A IN ('docker images -f "label=com.github.vcarreira.yo-generated"') DO docker rmi %%A
