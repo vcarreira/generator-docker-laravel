@@ -199,7 +199,7 @@ describe('generator-docker-laravel:app', function () {
     it('creates a script to update and reload the service', function () {
       assert.file([
         'update-notifications-service.sh',
-        'update-notifications-service.bat',
+        'update-notifications-service.bat'
       ]);
     });
     it('uses default notifications port', function () {
