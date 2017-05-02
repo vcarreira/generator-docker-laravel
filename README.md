@@ -16,7 +16,7 @@ Then generate your new project:
 yo docker-laravel
 ```
 
-This generator creates a docker-compose file (`docker-compose.yml`) and scripts (`dc-aliases` and `update-notifications-service.sh`) that helps you build and run a full Laravel project inside a set of docker containers. You choose which containers are created. At the moment the following containers are available:
+This generator creates a docker-compose file (`docker-compose.yml`) and scripts (`dc-aliases`/`dc-aliases.bat` and `update-notifications-service.sh`/`update-notifications-service.bat`) that helps you build and run a full Laravel project inside a set of docker containers. You choose which containers are created. At the moment the following containers are available:
  - NGINX container with FPM PHP 7.1 (mandatory)
  - Database container (for the moment only MySQL is supported) (mandatory)
  - Queue daemon used to run artisan queue command (includes a Redis container)
@@ -38,19 +38,23 @@ This generator creates a docker-compose file (`docker-compose.yml`) and scripts 
 
 [![05. Managing containers][video5thumb]][video5]
 
+[![06. Windows 10 with Command Prompt only][video6thumb]][video6]
+
 
 ## Getting Started
-Once generator-docker-laravel is installed go to your Laravel project folder, open a bash or powershell window
+Once generator-docker-laravel is installed go to your Laravel project folder, open a bash or command prompt window
 ```bash
 yo docker-laravel
 ```
-- Answer the prompts, and select which containers you want to setup
+- Answer the generator prompts, and select which containers you want to setup
 - Based on your options, the following files will be created:
  - `docker-compose.yml`: the docker compose file where all services are defined
- - `dc-aliases`: a set of aliases to help manage the docker containers
- - `update-notifications-service.sh`: script to recreate the NodeJS notifications daemon (when the code is changed the daemon should be updated)
+ - `dc-aliases`: a set of aliases to help manage the docker containers from bash
+ - `dc-aliases.bat`: a set of aliases to help manage the docker containers from a Windows command prompt
+ - `update-notifications-service.sh`: bash script to recreate the NodeJS notifications daemon (when the code is changed the daemon should be updated)
+ - `update-notifications-service.bat`: windows 10 command prompt script to recreate the NodeJS notifications daemon (when the code is changed the daemon should be updated)
  - `nodejs-apps` folder where the NodeJS notifications daemon sample app is stored
-- Enter: `source dc-aliases` to import the docker-compose alias into your terminal's session. Optionally you can copy them permanently to your shell's configuration file
+- Enter: `source dc-aliases` to import the docker-compose alias into your terminal's session. Optionally you can copy them permanently to your shell's configuration file. On Windows, from the command prompt, just type: `dc-aliases.bat`
 
 
 ## Launching the containers
@@ -81,7 +85,7 @@ The following aliases are provided for additional maintenance:
  - ```dc-clear-generated``` - to remove all generated images (all service containers must be stopped before running this command)
 
 **Important notes:**
-  - Version 1.7 or greater of ```docker-compose``` is required because the Compose file reads environment variables from the Laravel .env file
+  - Version 1.7 or greater of ```docker-compose``` is required because docker-compose configuration file reads environment variables from the Laravel .env file
   - [Composer CLI](https://getcomposer.org/)  must be installed to manage Laravel's package dependencies (the generator does not create a composer container)
   - This generator is an improvement of my [first approach](https://github.com/vcarreira/docker-laravel) to dockerize a Laravel project
 
@@ -103,9 +107,11 @@ Apache-2.0 © [Vitor Carreira]()
 [video3thumb]: https://img.youtube.com/vi/J7Oxxi1j4dM/0.jpg
 [video4thumb]: https://img.youtube.com/vi/hWwaBt5PP1g/0.jpg
 [video5thumb]: https://img.youtube.com/vi/vW603HViLK8/0.jpg
+[video6thumb]: https://img.youtube.com/vi/DlT7N1zkGYw/0.jpg
 [video1]: https://www.youtube.com/watch?v=W7XikYGS184&index=1&list=PLjwN1bRa3OvYMXX9-xSogHm7DZg-xkPtq
 [video2]: https://www.youtube.com/watch?v=W7XikYGS184&index=2&list=PLjwN1bRa3OvYMXX9-xSogHm7DZg-xkPtq
 [video3]: https://www.youtube.com/watch?v=W7XikYGS184&index=3&list=PLjwN1bRa3OvYMXX9-xSogHm7DZg-xkPtq
 [video4]: https://www.youtube.com/watch?v=W7XikYGS184&index=4&list=PLjwN1bRa3OvYMXX9-xSogHm7DZg-xkPtq
 [video5]: https://www.youtube.com/watch?v=W7XikYGS184&index=5&list=PLjwN1bRa3OvYMXX9-xSogHm7DZg-xkPtq
+[video6]: https://www.youtube.com/watch?v=W7XikYGS184&index=6&list=PLjwN1bRa3OvYMXX9-xSogHm7DZg-xkPtq
 
