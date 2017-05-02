@@ -91,7 +91,8 @@ module.exports = class extends Generator {
             value: 'adminer',
             checked: true
           }
-        ]
+        ],
+        store: true
       },
       {
         when: function (response) {
@@ -341,29 +342,30 @@ module.exports = class extends Generator {
 
     let envNewKeys = [];
 
-    if (env.APP_NAME === undefined) {
+    if (env.APP_NAME !== this.docker.name) {
+      if (!env.APP_NAME) {
+        envNewKeys.push('APP_NAME');
+      }
       env.APP_NAME = this.docker.name;
-      envNewKeys.push('APP_NAME');
-      env.DB_PASSWORD = randomize('Aa0', 16);
 
       if (this.docker.mysql) {
+        if (!env.DB_PASSWORD) {
+          env.DB_PASSWORD = randomize('Aa0', 16);
+        }
         if (!env.MYSQL_ROOT_PASSWORD) {
           envNewKeys.push('MYSQL_ROOT_PASSWORD');
+          env.MYSQL_ROOT_PASSWORD = randomize('Aa0', 16);
         }
-        env.MYSQL_ROOT_PASSWORD = randomize('Aa0', 16);
       }
       if (this.docker.redis) {
         env.REDIS_PASSWORD = randomize('Aa0', 8);
+        env.REDIS_HOST = `${this.docker.name}-redis`;
       }
 
       let dbname = _s.underscored(this.docker.name);
       env.DB_HOST = `${this.docker.name}-db`;
       env.DB_DATABASE = dbname;
       env.DB_USERNAME = 'docker';
-
-      if (this.docker.redis) {
-        env.REDIS_HOST = `${this.docker.name}-redis`;
-      }
     }
 
     if (this.docker.mysql) {

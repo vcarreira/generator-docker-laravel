@@ -309,40 +309,26 @@ describe('generator-docker-laravel:app', function () {
         .withPrompts({
           name: 'foobar',
           database: 'minimalMySQL',
-          extras: ['queue']
+          extras: ['queue', 'redis']
         })
         .toPromise();
     });
-    it('should keep app name related entries', function () {
+    it('should change app name related entries', function () {
       assert.fileContent(
         '.env',
-        /APP_NAME=app1/
+        /APP_NAME=foobar/
       );
       assert.fileContent(
         '.env',
-        /DB_DATABASE=app1/
+        /DB_DATABASE=foobar/
       );
       assert.fileContent(
         '.env',
-        /DB_HOST=app1-db/
+        /DB_HOST=foobar-db/
       );
       assert.fileContent(
         '.env',
-        /REDIS_HOST=app1-redis/
-      );
-    });
-    it('should keep passwords', function () {
-      assert.fileContent(
-        '.env',
-        /MYSQL_ROOT_PASSWORD=db-root-pass/
-      );
-      assert.fileContent(
-        '.env',
-        /DB_PASSWORD=db-pass/
-      );
-      assert.fileContent(
-        '.env',
-        /REDIS_PASSWORD=redis-pass/
+        /REDIS_HOST=foobar-redis/
       );
     });
   });
