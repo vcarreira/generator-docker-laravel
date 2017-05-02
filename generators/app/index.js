@@ -347,25 +347,25 @@ module.exports = class extends Generator {
         envNewKeys.push('APP_NAME');
       }
       env.APP_NAME = this.docker.name;
+    }
 
-      if (this.docker.mysql) {
-        if (!env.DB_PASSWORD) {
-          env.DB_PASSWORD = randomize('Aa0', 16);
-        }
-        if (!env.MYSQL_ROOT_PASSWORD) {
-          envNewKeys.push('MYSQL_ROOT_PASSWORD');
-          env.MYSQL_ROOT_PASSWORD = randomize('Aa0', 16);
-        }
-      }
-      if (this.docker.redis) {
-        env.REDIS_PASSWORD = randomize('Aa0', 8);
-        env.REDIS_HOST = `${this.docker.name}-redis`;
-      }
-
-      let dbname = _s.underscored(this.docker.name);
+    let dbname = _s.underscored(this.docker.name);
+    if (this.docker.mysql && env.DB_DATABASE !== dbname) {
       env.DB_HOST = `${this.docker.name}-db`;
       env.DB_DATABASE = dbname;
       env.DB_USERNAME = 'docker';
+      env.DB_PASSWORD = randomize('Aa0', 16);
+
+      if (!env.MYSQL_ROOT_PASSWORD) {
+        envNewKeys.push('MYSQL_ROOT_PASSWORD');
+        env.MYSQL_ROOT_PASSWORD = randomize('Aa0', 16);
+      }
+    }
+
+    let redisHost = `${this.docker.name}-redis`;
+    if (this.docker.redis && env.REDIS_HOST !== redisHost) {
+      env.REDIS_PASSWORD = randomize('Aa0', 8);
+      env.REDIS_HOST = redisHost;
     }
 
     if (this.docker.mysql) {

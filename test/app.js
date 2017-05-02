@@ -90,7 +90,7 @@ describe('generator-docker-laravel:app', function () {
     );
     assert.fileContent(
       '.env',
-      /DB_PASSWORD=[^x]\S+/
+      /DB_PASSWORD=\S{16}/
     );
   });
   it('writes .gitignore files', function () {
@@ -309,7 +309,7 @@ describe('generator-docker-laravel:app', function () {
         .withPrompts({
           name: 'foobar',
           database: 'minimalMySQL',
-          extras: ['queue', 'redis']
+          extra: ['queue']
         })
         .toPromise();
     });
@@ -412,7 +412,7 @@ describe('generator-docker-laravel:app', function () {
       );
       assert.fileContent(
         '.env',
-        /DB_PASSWORD=[^x]\S+/
+        /DB_PASSWORD=\S{16}/
       );
     });
     it('writes .gitignore files', function () {
