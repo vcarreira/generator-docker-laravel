@@ -144,7 +144,7 @@ describe('generator-docker-laravel:app', function () {
       );
       assert.fileContent(
         '.env',
-        /REDIS_PASSWORD=[^x]\S+/
+        /REDIS_PASSWORD=\S{8}/
       );
       assert.fileContent(
         '.env',
@@ -215,7 +215,7 @@ describe('generator-docker-laravel:app', function () {
       );
       assert.fileContent(
         '.env',
-        /REDIS_PASSWORD=[^x]\S+/
+        /REDIS_PASSWORD=\S{8}/
       );
       assert.fileContent(
         '.env',
